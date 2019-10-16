@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import listacompra.dto.Producto;
-import listacompra.gui.tablamodelos.ProductosTablaModelo;
+import listacompra.gui.modelos.ProductosTablaModelo;
 import listacompra.logica.LogicaListaCompra;
 import org.netbeans.validation.api.builtin.stringvalidation.MayusculasValidacion;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
@@ -24,6 +24,7 @@ public class ListaCompra extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setIconImage(new ImageIcon(getClass().getResource("/listacompra/gui/images/icono.png")).getImage());
         refrescarTabla();
+
         jButtonAnadirProducto.setEnabled(false);
         ValidationGroup grupo = panelValidacion.getValidationGroup();
         grupo.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING, new MayusculasValidacion());
@@ -42,15 +43,19 @@ public class ListaCompra extends javax.swing.JFrame {
 
     private void refrescarTabla() {
         jTableListaCompra.setModel(new ProductosTablaModelo(LogicaListaCompra.getListaProductos()));
+        //jTableListaCompra.getColumnModel().getColumn(0).setCellRenderer(new CeldaModeloCheckBoxRenderer());
+
     }
 
+    //método para borrar los datos del formulario tras pulsar el botón Añadir a la Lista (cesta_compra+)
     private void borrarDatosFormulario() {
-        jSpinnerCantidad.setValue(1);
+        SpinnerCantidad.setValue(1);
         jTextFieldNombre.setText("");
         jComboBoxSeccion.setSelectedIndex(0);
         jCheckBoxUrgente.setSelected(false);
     }
 
+    //método para borrar las filas seleccionadas en la jTable tras pulsar el botón Borrar Seleccionadas
     private void borrarFilas() {
         if (!LogicaListaCompra.listaVacia()) {
             boolean noHayFilasSeleccionadas = true;
@@ -65,7 +70,6 @@ public class ListaCompra extends javax.swing.JFrame {
             } else {
                 refrescarTabla();
             }
-
         } else {
             JOptionPane.showMessageDialog(this, "No hay productos en la lista.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
@@ -83,16 +87,16 @@ public class ListaCompra extends javax.swing.JFrame {
 
         jPanelProducto = new javax.swing.JPanel();
         jLabelCantidad = new javax.swing.JLabel();
-        jLabelSeccion = new javax.swing.JLabel();
+        SpinnerCantidad = new listacompra.gui.modelos.SpinnerModelo();
         jLabelNombre = new javax.swing.JLabel();
         jTextFieldNombre = new javax.swing.JTextField();
+        jLabelSeccion = new javax.swing.JLabel();
         jComboBoxSeccion = new javax.swing.JComboBox<>();
-        jSpinnerCantidad = new javax.swing.JSpinner();
         jCheckBoxUrgente = new javax.swing.JCheckBox();
-        jButtonAnadirProducto = new javax.swing.JButton();
         panelValidacion = new org.netbeans.validation.api.ui.swing.ValidationPanel();
+        jButtonAnadirProducto = new javax.swing.JButton();
         jLabelListaCompra = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPaneTablaListaCompra = new javax.swing.JScrollPane();
         jTableListaCompra = new javax.swing.JTable();
         buttonBorrarSeleccion = new java.awt.Button();
         buttonBorrarLista = new java.awt.Button();
@@ -101,13 +105,22 @@ public class ListaCompra extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Lista de la compra");
 
+        jPanelProducto.setBackground(new java.awt.Color(204, 255, 255));
+        jPanelProducto.setToolTipText("");
+
         jLabelCantidad.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabelCantidad.setForeground(new java.awt.Color(0, 0, 51));
         jLabelCantidad.setText("Cantidad:");
 
-        jLabelSeccion.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabelSeccion.setForeground(new java.awt.Color(0, 0, 51));
-        jLabelSeccion.setText("Sección:");
+        SpinnerCantidad.setBackground(new java.awt.Color(0, 0, 51));
+        SpinnerCantidad.setForeground(new java.awt.Color(0, 0, 51));
+        SpinnerCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, 250, 1));
+        SpinnerCantidad.setToolTipText("Unidades necesarias");
+        SpinnerCantidad.setColorFondo(new java.awt.Color(0, 0, 51));
+        SpinnerCantidad.setColorTexto(new java.awt.Color(153, 255, 255));
+        SpinnerCantidad.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
+        SpinnerCantidad.setMinimumSize(new java.awt.Dimension(72, 34));
+        SpinnerCantidad.setPreferredSize(new java.awt.Dimension(72, 34));
 
         jLabelNombre.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabelNombre.setForeground(new java.awt.Color(0, 0, 51));
@@ -115,6 +128,8 @@ public class ListaCompra extends javax.swing.JFrame {
 
         jTextFieldNombre.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
         jTextFieldNombre.setToolTipText("Nombre del producto");
+        jTextFieldNombre.setCaretColor(new java.awt.Color(0, 0, 51));
+        jTextFieldNombre.setDisabledTextColor(new java.awt.Color(153, 255, 255));
         jTextFieldNombre.setName("Nombre"); // NOI18N
         jTextFieldNombre.setNextFocusableComponent(jComboBoxSeccion);
         jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -123,17 +138,15 @@ public class ListaCompra extends javax.swing.JFrame {
             }
         });
 
+        jLabelSeccion.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabelSeccion.setForeground(new java.awt.Color(0, 0, 51));
+        jLabelSeccion.setText("Sección:");
+
         jComboBoxSeccion.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
         jComboBoxSeccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Panadería", "Pescadería", "Frutería", "Carnicería", "Charcutería", "Conservas", "Perfumería", "General" }));
         jComboBoxSeccion.setToolTipText("Sección del supermercado");
         jComboBoxSeccion.setName("Sección"); // NOI18N
         jComboBoxSeccion.setNextFocusableComponent(jCheckBoxUrgente);
-
-        jSpinnerCantidad.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        jSpinnerCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, 250, 1));
-        jSpinnerCantidad.setToolTipText("Unidades necesarias");
-        jSpinnerCantidad.setName("Cantidad"); // NOI18N
-        jSpinnerCantidad.setNextFocusableComponent(jTextFieldNombre);
 
         jCheckBoxUrgente.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jCheckBoxUrgente.setForeground(new java.awt.Color(0, 0, 51));
@@ -146,6 +159,9 @@ public class ListaCompra extends javax.swing.JFrame {
                 jCheckBoxUrgenteActionPerformed(evt);
             }
         });
+
+        panelValidacion.setForeground(new java.awt.Color(60, 63, 65));
+        panelValidacion.setOpaque(false);
 
         jButtonAnadirProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/listacompra/gui/images/cesta_imagen.png"))); // NOI18N
         jButtonAnadirProducto.setToolTipText("Añadir a la lista");
@@ -162,6 +178,8 @@ public class ListaCompra extends javax.swing.JFrame {
         jLabelListaCompra.setFont(new java.awt.Font("Ink Free", 1, 24)); // NOI18N
         jLabelListaCompra.setForeground(new java.awt.Color(0, 0, 51));
         jLabelListaCompra.setText("Mi lista de la compra");
+
+        jScrollPaneTablaListaCompra.setBackground(new java.awt.Color(0, 0, 51));
 
         jTableListaCompra.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
         jTableListaCompra.setForeground(new java.awt.Color(0, 0, 51));
@@ -182,10 +200,18 @@ public class ListaCompra extends javax.swing.JFrame {
             }
         });
         jTableListaCompra.setToolTipText("Listado de Productos");
+        jTableListaCompra.setColumnSelectionAllowed(true);
         jTableListaCompra.setSelectionForeground(new java.awt.Color(0, 0, 51));
-        jScrollPane2.setViewportView(jTableListaCompra);
+        jScrollPaneTablaListaCompra.setViewportView(jTableListaCompra);
+        jTableListaCompra.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (jTableListaCompra.getColumnModel().getColumnCount() > 0) {
+            jTableListaCompra.getColumnModel().getColumn(0).setResizable(false);
+            jTableListaCompra.getColumnModel().getColumn(4).setResizable(false);
+        }
 
-        buttonBorrarSeleccion.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        buttonBorrarSeleccion.setBackground(new java.awt.Color(0, 0, 51));
+        buttonBorrarSeleccion.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
+        buttonBorrarSeleccion.setForeground(new java.awt.Color(153, 255, 255));
         buttonBorrarSeleccion.setLabel("Borrar Selección");
         buttonBorrarSeleccion.setName("Borrar Seleccion"); // NOI18N
         buttonBorrarSeleccion.addActionListener(new java.awt.event.ActionListener() {
@@ -194,7 +220,9 @@ public class ListaCompra extends javax.swing.JFrame {
             }
         });
 
-        buttonBorrarLista.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        buttonBorrarLista.setBackground(new java.awt.Color(0, 0, 51));
+        buttonBorrarLista.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
+        buttonBorrarLista.setForeground(new java.awt.Color(153, 255, 255));
         buttonBorrarLista.setLabel("Borrar Lista");
         buttonBorrarLista.setName("Borrar Lista"); // NOI18N
         buttonBorrarLista.addActionListener(new java.awt.event.ActionListener() {
@@ -203,7 +231,9 @@ public class ListaCompra extends javax.swing.JFrame {
             }
         });
 
-        buttonImprimir.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        buttonImprimir.setBackground(new java.awt.Color(0, 0, 51));
+        buttonImprimir.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
+        buttonImprimir.setForeground(new java.awt.Color(153, 255, 255));
         buttonImprimir.setLabel("Imprimir");
         buttonImprimir.setName("Imprimir"); // NOI18N
         buttonImprimir.addActionListener(new java.awt.event.ActionListener() {
@@ -216,6 +246,7 @@ public class ListaCompra extends javax.swing.JFrame {
         jPanelProducto.setLayout(jPanelProductoLayout);
         jPanelProductoLayout.setHorizontalGroup(
             jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelValidacion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanelProductoLayout.createSequentialGroup()
                 .addGroup(jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelProductoLayout.createSequentialGroup()
@@ -228,70 +259,60 @@ public class ListaCompra extends javax.swing.JFrame {
                             .addGroup(jPanelProductoLayout.createSequentialGroup()
                                 .addComponent(jLabelCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSpinnerCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(117, 117, 117)
+                                .addComponent(SpinnerCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(102, 102, 102)
                                 .addComponent(jLabelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelProductoLayout.createSequentialGroup()
-                                .addGap(0, 149, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jCheckBoxUrgente))
                             .addComponent(jTextFieldNombre)))
                     .addGroup(jPanelProductoLayout.createSequentialGroup()
                         .addGap(175, 175, 175)
                         .addComponent(jButtonAnadirProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelProductoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPaneTablaListaCompra)))
                 .addContainerGap())
             .addGroup(jPanelProductoLayout.createSequentialGroup()
-                .addGap(152, 152, 152)
-                .addComponent(jLabelListaCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanelProductoLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelProductoLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2)
-                        .addContainerGap())
+                        .addGap(152, 152, 152)
+                        .addComponent(jLabelListaCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelProductoLayout.createSequentialGroup()
-                        .addGroup(jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(panelValidacion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelProductoLayout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(buttonBorrarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(19, 19, 19)
-                                .addComponent(buttonBorrarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
-                                .addComponent(buttonImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(19, 19, 19)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addContainerGap()
+                        .addComponent(buttonBorrarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonBorrarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(103, 103, 103)
+                        .addComponent(buttonImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelProductoLayout.setVerticalGroup(
             jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelProductoLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabelCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jSpinnerCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(SpinnerCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelProductoLayout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addGroup(jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanelProductoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBoxUrgente)))
+                .addGap(10, 10, 10)
+                .addGroup(jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBoxUrgente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelValidacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonAnadirProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                .addComponent(jButtonAnadirProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelListaCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPaneTablaListaCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonBorrarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -305,15 +326,16 @@ public class ListaCompra extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addComponent(jPanelProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jPanelProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addComponent(jPanelProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
 
         pack();
@@ -330,7 +352,6 @@ public class ListaCompra extends javax.swing.JFrame {
     //Botón imprimir
     private void buttonImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImprimirActionPerformed
         JOptionPane.showMessageDialog(this, LogicaListaCompra.crearLista(), "Lista de la Compra", JOptionPane.INFORMATION_MESSAGE);
-
     }//GEN-LAST:event_buttonImprimirActionPerformed
 
     //Botón borrar selección
@@ -340,15 +361,19 @@ public class ListaCompra extends javax.swing.JFrame {
 
     //Botón borrar lista completa
     private void buttonBorrarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBorrarListaActionPerformed
-        LogicaListaCompra.borrarListaProductos();
-        refrescarTabla();
+        if (!LogicaListaCompra.listaVacia()) {
+            LogicaListaCompra.borrarListaProductos();
+            refrescarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay productos para borrar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_buttonBorrarListaActionPerformed
 
     //botón Agregar Producto a la tabla (imagen cesta compra +)
     private void jButtonAnadirProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnadirProductoActionPerformed
 
         Producto producto = new Producto(
-                (int) jSpinnerCantidad.getValue(),
+                (int) SpinnerCantidad.getValue(),
                 jTextFieldNombre.getText(),
                 jComboBoxSeccion.getSelectedItem().toString(),
                 jCheckBoxUrgente.isSelected()
@@ -396,6 +421,7 @@ public class ListaCompra extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private listacompra.gui.modelos.SpinnerModelo SpinnerCantidad;
     private java.awt.Button buttonBorrarLista;
     private java.awt.Button buttonBorrarSeleccion;
     private java.awt.Button buttonImprimir;
@@ -407,8 +433,7 @@ public class ListaCompra extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelSeccion;
     private javax.swing.JPanel jPanelProducto;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinnerCantidad;
+    private javax.swing.JScrollPane jScrollPaneTablaListaCompra;
     private javax.swing.JTable jTableListaCompra;
     private javax.swing.JTextField jTextFieldNombre;
     private org.netbeans.validation.api.ui.swing.ValidationPanel panelValidacion;

@@ -3,21 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package listacompra.gui.tablamodelos;
+package listacompra.gui.modelos;
 
+import java.awt.Component;
 import java.util.List;
+import javax.swing.JCheckBox;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellRenderer;
 import listacompra.dto.Producto;
 
 /**
  *
  * @author Irache Mtnez.
  */
-public class ProductosTablaModelo extends AbstractTableModel {
+public class ProductosTablaModelo extends AbstractTableModel implements TableCellRenderer {
 
     private List<Producto> listaProductos;
 
     String[] nombresColumnas = {"X", "Cantidad", "Nombre", "Sección", "Urgente"};
+    //int[] anchoColumnas = {30, 40, 120, 90, 30};
 
     public ProductosTablaModelo(List<Producto> listaProductos) {
         this.listaProductos = listaProductos;
@@ -68,4 +73,16 @@ public class ProductosTablaModelo extends AbstractTableModel {
         return true; //(columnIndex == 0)
     }
 
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+        JCheckBox check = new JCheckBox();
+        if (column == 0) {
+            return check;
+        }
+        if (value == null) {
+            return null;
+        }
+        return null;
+    }
 }
