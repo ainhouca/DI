@@ -44,7 +44,6 @@ public class ListaCompra extends javax.swing.JFrame {
     private void refrescarTabla() {
         jTableListaCompra.setModel(new ProductosTablaModelo(LogicaListaCompra.getListaProductos()));
         //jTableListaCompra.getColumnModel().getColumn(0).setCellRenderer(new CeldaModeloCheckBoxRenderer());
-
     }
 
     //método para borrar los datos del formulario tras pulsar el botón Añadir a la Lista (cesta_compra+)
@@ -70,6 +69,7 @@ public class ListaCompra extends javax.swing.JFrame {
             } else {
                 refrescarTabla();
             }
+
         } else {
             JOptionPane.showMessageDialog(this, "No hay productos en la lista.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
@@ -116,11 +116,9 @@ public class ListaCompra extends javax.swing.JFrame {
         SpinnerCantidad.setForeground(new java.awt.Color(0, 0, 51));
         SpinnerCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, 250, 1));
         SpinnerCantidad.setToolTipText("Unidades necesarias");
-        SpinnerCantidad.setColorFondo(new java.awt.Color(0, 0, 51));
-        SpinnerCantidad.setColorTexto(new java.awt.Color(153, 255, 255));
+        SpinnerCantidad.setColorFondo(new java.awt.Color(153, 255, 255));
+        SpinnerCantidad.setColorTexto(new java.awt.Color(0, 0, 51));
         SpinnerCantidad.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
-        SpinnerCantidad.setMinimumSize(new java.awt.Dimension(72, 34));
-        SpinnerCantidad.setPreferredSize(new java.awt.Dimension(72, 34));
 
         jLabelNombre.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabelNombre.setForeground(new java.awt.Color(0, 0, 51));
@@ -269,26 +267,25 @@ public class ListaCompra extends javax.swing.JFrame {
                                 .addComponent(jCheckBoxUrgente))
                             .addComponent(jTextFieldNombre)))
                     .addGroup(jPanelProductoLayout.createSequentialGroup()
-                        .addGap(175, 175, 175)
-                        .addComponent(jButtonAnadirProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanelProductoLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPaneTablaListaCompra)))
+                        .addComponent(jScrollPaneTablaListaCompra))
+                    .addGroup(jPanelProductoLayout.createSequentialGroup()
+                        .addGroup(jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelProductoLayout.createSequentialGroup()
+                                .addGap(175, 175, 175)
+                                .addComponent(jButtonAnadirProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelProductoLayout.createSequentialGroup()
+                                .addGap(152, 152, 152)
+                                .addComponent(jLabelListaCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelProductoLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(buttonBorrarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buttonBorrarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(103, 103, 103)
+                                .addComponent(buttonImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 4, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanelProductoLayout.createSequentialGroup()
-                .addGroup(jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelProductoLayout.createSequentialGroup()
-                        .addGap(152, 152, 152)
-                        .addComponent(jLabelListaCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelProductoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(buttonBorrarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonBorrarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(103, 103, 103)
-                        .addComponent(buttonImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelProductoLayout.setVerticalGroup(
             jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,10 +311,10 @@ public class ListaCompra extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPaneTablaListaCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonBorrarSeleccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonBorrarLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(buttonBorrarLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonBorrarSeleccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -395,7 +392,7 @@ public class ListaCompra extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
