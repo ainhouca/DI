@@ -1,6 +1,7 @@
 package listaCompra.gui;
 
 import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,11 +14,16 @@ public class PantallaPrincipal extends javax.swing.JFrame {
      */
     public PantallaPrincipal() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        this.setIconImage(new ImageIcon(getClass().getResource("/listacompra/gui/images/icono.png")).getImage());
+
+        this.setIconImage(new ImageIcon(getClass().getResource("/listaCompra/gui/images/icono.png")).getImage());
+        recargarTabla();
     }
 
-    public void refrescarTabla() {
+    public void recargarTabla() {
+        DefaultTableModel modeloTabla = new DefaultTableModel();
+        jTableTabla.setModel(modeloTabla);
+        String[] nombresColumnas = {"X", "Cantidad", "Nombre", "Sección", "Urgente"};
+        modeloTabla.setColumnIdentifiers(nombresColumnas);
 
     }
 
@@ -48,6 +54,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jButtonImprimir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Lista de la compra");
         setBackground(new java.awt.Color(153, 255, 255));
 
         jPanelFormulario.setBackground(new java.awt.Color(153, 255, 255));
@@ -274,6 +281,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
