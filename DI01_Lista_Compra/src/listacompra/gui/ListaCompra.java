@@ -66,9 +66,9 @@ public class ListaCompra extends javax.swing.JFrame {
     //método para dar formato a la tabla
     private void darFormatoTabla() {
 
-        //establecer fuente, colores y alto de la cabecera
-        jTableListaCompra.getTableHeader().setForeground(Color.DARK_GRAY);
+        //establecer fuente, color de la fuente y alto de la fila de la cabecera
         jTableListaCompra.getTableHeader().setFont(new Font("Ink Free", Font.BOLD, 16));
+        jTableListaCompra.getTableHeader().setForeground(Color.DARK_GRAY);
         jTableListaCompra.getTableHeader().setPreferredSize(new java.awt.Dimension(0, 30));
 
         //establecer ancho de las columnas
