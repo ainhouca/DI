@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -75,19 +76,6 @@ public class ProductosTablaModelo extends AbstractTableModel implements TableCel
     }
 
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int rowIndex, int columnIndex) {
-        JCheckBox check = new JCheckBox();
-        if (columnIndex == 0) {
-            return check;
-        }
-        if (value == null) {
-            return null;
-        }
-        return null;
-    }
-
-    @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         Producto producto = LogicaListaCompra.getProducto(rowIndex);
 
@@ -95,6 +83,25 @@ public class ProductosTablaModelo extends AbstractTableModel implements TableCel
             producto.setSeleccion((Boolean) aValue);
         }
         fireTableCellUpdated(rowIndex, columnIndex);
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+        JLabel etiqueta = new JLabel();
+        JCheckBox casilla = new JCheckBox();
+
+        AbstractTableModel modelo = (AbstractTableModel) table.getModel();
+
+        if (modelo.getValueAt(row, column).getClass().equals(Boolean.class)) {
+            casilla.setSelected(Boolean.parseBoolean(modelo.getValueAt(row, column).toString()));
+            return casilla;
+        }
+
+        if ((column != 0)) {
+            etiqueta.setText(modelo.getValueAt(row, column).toString());
+        }
+        return casilla;
     }
 
 }
