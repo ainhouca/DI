@@ -1,4 +1,4 @@
-package listaCompra.dto;
+package listacompra.dto;
 
 /**
  *
