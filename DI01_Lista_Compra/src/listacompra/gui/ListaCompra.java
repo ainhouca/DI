@@ -1,5 +1,7 @@
 package listacompra.gui;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.util.Locale;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
@@ -57,16 +59,28 @@ public class ListaCompra extends javax.swing.JFrame {
 
         jTableListaCompra.setDefaultRenderer(jTableListaCompra.getColumnClass(0), claseRender);
 
-        asignarAnchoColumnas();
+        darFormatoTabla();
+
     }
 
-    //método para asignar el ancho a las columnas de la tabla
-    private void asignarAnchoColumnas() {
-        int[] anchoColumnas = {25, 70, 221, 180, 60};
+    //método para dar formato a la tabla
+    private void darFormatoTabla() {
+
+        //establecer fuente, colores y alto de la cabecera
+        jTableListaCompra.getTableHeader().setForeground(Color.DARK_GRAY);
+        jTableListaCompra.getTableHeader().setFont(new Font("Ink Free", Font.BOLD, 16));
+        jTableListaCompra.getTableHeader().setPreferredSize(new java.awt.Dimension(0, 30));
+
+        //establecer ancho de las columnas
+        int[] anchoColumnas = {30, 80, 190, 175, 81};
         jTableListaCompra.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         for (int i = 0; i < anchoColumnas.length; i++) {
             jTableListaCompra.getColumnModel().getColumn(i).setPreferredWidth(anchoColumnas[i]);
         }
+
+        //establecer alto de las filas
+        jTableListaCompra.setRowHeight(25);
+
     }
 
     //método para borrar los datos del formulario tras pulsar el botón Añadir a la Lista (cesta_compra+)
@@ -328,7 +342,7 @@ public class ListaCompra extends javax.swing.JFrame {
         jScrollPaneTabla.setBackground(new java.awt.Color(0, 0, 51));
         jScrollPaneTabla.setForeground(new java.awt.Color(204, 255, 255));
 
-        jTableListaCompra.setFont(new java.awt.Font("Ink Free", 1, 14)); // NOI18N
+        jTableListaCompra.setFont(new java.awt.Font("Ink Free", 1, 18)); // NOI18N
         jTableListaCompra.setForeground(new java.awt.Color(0, 0, 51));
         jTableListaCompra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
