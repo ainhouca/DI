@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" language="jambi">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>530</width>
+    <height>282</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>recursos/cesta_imagen.png</normaloff>recursos/cesta_imagen.png</iconset>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="0" colspan="3">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="4" colspan="3">
+        <widget class="QLineEdit" name="lineEdit_nombre">
+         <property name="font">
+          <font>
+           <family>Papyrus</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>Nombre del producto</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_seccion">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Sección:</string>
+         </property>
+         <property name="buddy">
+          <cstring>comboBox_seccion</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="6">
+        <widget class="QCheckBox" name="checkBox_urgente">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>11</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>¿Es urgente?</string>
+         </property>
+         <property name="text">
+          <string>Urgente</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_cantidad">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Cantidad:</string>
+         </property>
+         <property name="buddy">
+          <cstring>spinBox_cantidad</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="3">
+        <widget class="QComboBox" name="comboBox_seccion">
+         <property name="font">
+          <font>
+           <family>Papyrus</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>Seleccionar sección del supermercado</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Panadería</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Pescadería</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Frutería</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Carnicería</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Charcutería</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Conservas</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Perfumería</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>General</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="2" column="4" colspan="2">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>168</width>
+           <height>28</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="2">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>58</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="3" column="0" colspan="7">
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>438</width>
+           <height>38</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="spinBox_cantidad">
+         <property name="font">
+          <font>
+           <family>Papyrus</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>Nº de unidades</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLabel" name="label_nombre">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Nombre:</string>
+         </property>
+         <property name="buddy">
+          <cstring>lineEdit_nombre</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="7">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>438</width>
+           <height>18</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>118</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="pushButton_cestaCompra">
+       <property name="toolTip">
+        <string>Añadir producto a la lista</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>recursos/cesta_imagen.png</normaloff>recursos/cesta_imagen.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>100</width>
+         <height>100</height>
+        </size>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>118</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>spinBox_cantidad</tabstop>
+  <tabstop>lineEdit_nombre</tabstop>
+  <tabstop>comboBox_seccion</tabstop>
+  <tabstop>checkBox_urgente</tabstop>
+  <tabstop>pushButton_cestaCompra</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
