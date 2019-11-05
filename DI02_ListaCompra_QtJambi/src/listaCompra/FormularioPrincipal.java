@@ -9,7 +9,13 @@ package listaCompra;
  */
 import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ *
+ * @author Irache Mtnez.
+ */
 public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow> {
 
     public QWidget centralwidget;
@@ -149,12 +155,38 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
         pushButton_anadir.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "A\u00f1adir", null));
     } // retranslateUi
 
-    //método para abrir el formulario para añadir producto
+    //método para abrir el formulario para añadir producto (desde botón Añadir)
     void abrirFormularioAnadirProducto() {
         FormularioAnadirProducto Alta = new FormularioAnadirProducto();
         QDialog dialog = new QDialog();
         Alta.setupUi(dialog);
         dialog.show();
+    }
+
+    private void rellenarTabla() {
+        //Creamos el modelo para la tabla
+        QStandardItemModel modelo = new QStandardItemModel();
+        //Añadimos los textos para los títulos de las columnas a una lista
+        List<String> cabecera = new ArrayList<>();
+        cabecera.add("X");
+        cabecera.add("Nombre");
+        cabecera.add("Cantidad");
+        cabecera.add("Sección");
+        cabecera.add("Urgente");
+        //Indicamos el número de columnas
+        modelo.setColumnCount(5);
+        modelo.setHorizontalHeaderLabels(cabecera);
+
+        //Añadimos los datos de la tabla al modelo
+        /*modelo.setRowCount(2);
+        modelo.setData(0, 0, "Pablo");
+        modelo.setData(0, 1, "González");
+        modelo.setData(1, 0, "Alfredo");
+        modelo.setData(1, 1, "Pérez");
+         */
+        //Indicamos a la tabla cual es su modelo
+        tableView_tabla.setModel(modelo);
+
     }
 
 }

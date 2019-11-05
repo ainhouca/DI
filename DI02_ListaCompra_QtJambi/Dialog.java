@@ -112,6 +112,9 @@ public class Dialog implements com.trolltech.qt.QUiForm<QDialog>
         font5.setBold(true);
         font5.setWeight(75);
         spinBox_cantidad.setFont(font5);
+        spinBox_cantidad.setAlignment(com.trolltech.qt.core.Qt.AlignmentFlag.createQFlags(com.trolltech.qt.core.Qt.AlignmentFlag.AlignRight,com.trolltech.qt.core.Qt.AlignmentFlag.AlignVCenter));
+        spinBox_cantidad.setMinimum(1);
+        spinBox_cantidad.setValue(1);
 
         gridLayout.addWidget(spinBox_cantidad, 0, 1, 1, 1);
 
@@ -158,6 +161,10 @@ public class Dialog implements com.trolltech.qt.QUiForm<QDialog>
         QWidget.setTabOrder(comboBox_seccion, checkBox_urgente);
         QWidget.setTabOrder(checkBox_urgente, pushButton_cestaCompra);
         retranslateUi(Dialog);
+        pushButton_cestaCompra.clicked.connect(spinBox_cantidad, "lower()");
+        pushButton_cestaCompra.clicked.connect(comboBox_seccion, "clear()");
+        pushButton_cestaCompra.clicked.connect(lineEdit_nombre, "clear()");
+        pushButton_cestaCompra.clicked.connect(checkBox_urgente, "setDisabled(boolean)");
 
         Dialog.connectSlotsByName();
     } // setupUi
