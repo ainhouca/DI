@@ -11,6 +11,7 @@ import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
 import java.util.ArrayList;
 import java.util.List;
+import com.trolltech.qt.gui.QFormLayout;
 
 /**
  *
@@ -33,6 +34,8 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
     public QPushButton pushButton_anadir;
     public QSpacerItem horizontalSpacer_3;
     public QStatusBar statusbar;
+
+    QStandardItemModel modelo;
 
     public FormularioPrincipal() {
         super();
@@ -133,7 +136,8 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
 
         gridLayout.addItem(horizontalSpacer_3, 2, 0, 1, 6);
 
-        formLayout.addLayout(gridLayout);
+        formLayout.addItem(gridLayout);
+        //formLayout.addLayout(gridLayout);  --> no existe el método addLayout()
 
         MainWindow.setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MainWindow);
@@ -163,9 +167,10 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
         dialog.show();
     }
 
+    //método para rellenar la tabla
     private void rellenarTabla() {
         //Creamos el modelo para la tabla
-        QStandardItemModel modelo = new QStandardItemModel();
+        modelo = new QStandardItemModel();
         //Añadimos los textos para los títulos de las columnas a una lista
         List<String> cabecera = new ArrayList<>();
         cabecera.add("X");
@@ -174,9 +179,10 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
         cabecera.add("Sección");
         cabecera.add("Urgente");
         //Indicamos el número de columnas
-        modelo.setColumnCount(5);
+        modelo.setColumnCount(cabecera.size());
         modelo.setHorizontalHeaderLabels(cabecera);
 
+        //refrescarTabla();
         //Añadimos los datos de la tabla al modelo
         /*modelo.setRowCount(2);
         modelo.setData(0, 0, "Pablo");

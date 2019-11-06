@@ -156,7 +156,8 @@ public class FormularioAnadirProducto implements com.trolltech.qt.QUiForm<QDialo
 
         gridLayout_2.addItem(verticalSpacer_2, 1, 2, 1, 1);
 
-        formLayout.addLayout(gridLayout_2);
+        formLayout.addItem(gridLayout_2);
+        //formLayout.addLayout(gridLayout_2);
 
         label_seccion.setBuddy(comboBox_seccion);
         label_cantidad.setBuddy(spinBox_cantidad);
