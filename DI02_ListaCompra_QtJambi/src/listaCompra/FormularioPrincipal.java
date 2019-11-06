@@ -12,6 +12,7 @@ import com.trolltech.qt.core.Qt.CheckState;
 import com.trolltech.qt.gui.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -46,6 +47,7 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
     public void setupUi(QMainWindow MainWindow) {
         MainWindow.setObjectName("MainWindow");
         MainWindow.resize(new QSize(678, 365).expandedTo(MainWindow.minimumSizeHint()));
+        MainWindow.setWindowIcon(new QIcon(new QPixmap("recursos/cesta_imagen.png")));
         centralwidget = new QWidget(MainWindow);
         centralwidget.setObjectName("centralwidget");
         formLayout = new QFormLayout(centralwidget);
@@ -112,6 +114,7 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
         font4.setBold(true);
         font4.setWeight(75);
         pushButton_imprimir.setFont(font4);
+        pushButton_imprimir.clicked.connect(this, "imprimir()");
 
         gridLayout.addWidget(pushButton_imprimir, 6, 5, 1, 1);
 
@@ -164,7 +167,7 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
         pushButton_anadir.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "A\u00f1adir", null));
     } // retranslateUi
 
-    //método para abrir el formulario para añadir producto (desde botón Añadir)
+    //método para abrir el formulario para añadir producto (asociado al botón Añadir)
     void abrirFormularioAnadirProducto() {
         FormularioAnadirProducto Alta = new FormularioAnadirProducto();
         QDialog dialog = new QDialog();
@@ -172,7 +175,7 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
         dialog.show();
     }
 
-    //método para rellenar la tabla
+    //método para crear la tabla
     public void crearTabla() {
 
         //Creamos el modelo para la tabla
@@ -228,22 +231,45 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
         }
     }
 
+    //método asociado al botón Borrar Todo
     void borrarTodo() {
-        listaProductos = MetodosListaProductos.borrarListaProductos();
-        rellenarTabla();
+        if (!listaProductos.isEmpty()) {
+            listaProductos = MetodosListaProductos.borrarListaProductos();
+            rellenarTabla();
+        } else {
+            JOptionPane.showMessageDialog(null, "No existen productos para borrar.",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+
+        }
+
     }
 
+    //método asociado al botón Borrar Selección
     void borrarProductosSeleccionados() {
+        boolean seleccionados = false;
         modelo = (QStandardItemModel) tableView_tabla.model();
         if (!listaProductos.isEmpty()) {
             for (int i = 0; i < listaProductos.size(); i++) {
 
                 if (modelo.takeItem(i, 0).checkState().equals(CheckState.Checked)) {
                     MetodosListaProductos.borrarProducto(i);
+                    seleccionados = true;
                 }
             }
+            if (!seleccionados) {
+                JOptionPane.showMessageDialog(null, "No hay productos seleccionados.",
+                        "Advertencia", JOptionPane.WARNING_MESSAGE);
+                rellenarTabla();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay productos para borrar.",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-        rellenarTabla();
     }
 
+    //metodo asociado al botón borrar
+    void imprimir() {
+        JOptionPane.showMessageDialog(null, MetodosListaProductos.crearLista(), "Lista de la Compra",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
 }
