@@ -33,12 +33,14 @@ public class FormularioAnadirProducto implements com.trolltech.qt.QUiForm<QDialo
     public QSpacerItem verticalSpacer;
     public QPushButton pushButton_cestaCompra;
     public QSpacerItem verticalSpacer_2;
+    QDialog pantalla;
 
     public FormularioAnadirProducto() {
         super();
     }
 
     public void setupUi(QDialog Dialog) {
+        pantalla = Dialog;
         Dialog.setObjectName("Dialog");
         Dialog.resize(new QSize(530, 282).expandedTo(Dialog.minimumSizeHint()));
         Dialog.setWindowIcon(new QIcon(new QPixmap("recursos/cesta_imagen.png")));
@@ -170,6 +172,7 @@ public class FormularioAnadirProducto implements com.trolltech.qt.QUiForm<QDialo
 
         pushButton_cestaCompra.clicked.connect(this, "crearProducto()");
         pushButton_cestaCompra.clicked.connect(ClaseMain.principal, "rellenarTabla()");
+        pushButton_cestaCompra.clicked.connect(this, "cerrarDialogo()");
 
         //pushButton_cestaCompra.clicked.connect(spinBox_cantidad, "lower()");
         //pushButton_cestaCompra.clicked.connect(comboBox_seccion, "clear()");
@@ -220,6 +223,10 @@ public class FormularioAnadirProducto implements com.trolltech.qt.QUiForm<QDialo
         }while (!correcto);*/
         Producto producto = new Producto(cantidad, nombre, seccion, urgente);
         MetodosListaProductos.anadirProducto(producto);
+    }
+
+    void cerrarDialogo() {
+        pantalla.close();
     }
 
 }

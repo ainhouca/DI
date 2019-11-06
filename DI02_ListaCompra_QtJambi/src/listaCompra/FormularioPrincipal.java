@@ -8,6 +8,7 @@ package listaCompra;
  * ******************************************************************************
  */
 import com.trolltech.qt.core.*;
+import com.trolltech.qt.core.Qt.CheckState;
 import com.trolltech.qt.gui.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +86,7 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
         font2.setBold(true);
         font2.setWeight(75);
         pushButton_borrarSeleccion.setFont(font2);
-        //pushButton_borrarSeleccion.clicked.connect(this, "MetodosListaProductos.borrarProducto(fila)");
+        pushButton_borrarSeleccion.clicked.connect(this, "borrarProductosSeleccionados()");
         gridLayout.addWidget(pushButton_borrarSeleccion, 6, 1, 1, 2);
 
         label = new QLabel(centralwidget);
@@ -193,19 +194,36 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
 
         //Indicamos a la tabla cual es su modelo
         tableView_tabla.setModel(modelo);
+
+        int[] anchoColumnas = {100, 150, 150, 150, 100};
+        for (int i = 0; i < anchoColumnas.length; i++) {
+            tableView_tabla.setColumnWidth(i, anchoColumnas[i]);
+        }
     }
 
     //método para rellenar la tabla
     void rellenarTabla() {
         listaProductos = MetodosListaProductos.getListaProductos();
         modelo.setRowCount(listaProductos.size());
+
         if (!listaProductos.isEmpty()) {
             for (int i = 0; i < listaProductos.size(); i++) {
-                modelo.setData(i, 0, "false");
+                QStandardItem qsi0 = new QStandardItem();
+                qsi0.setCheckable(true);
+                qsi0.setCheckState(Qt.CheckState.Unchecked);
+                modelo.setItem(i, 0, qsi0);
                 modelo.setData(i, 1, MetodosListaProductos.getProducto(i).cantidad);
                 modelo.setData(i, 2, MetodosListaProductos.getProducto(i).nombre);
                 modelo.setData(i, 3, MetodosListaProductos.getProducto(i).seccion);
-                modelo.setData(i, 4, MetodosListaProductos.getProducto(i).urgente);
+
+                QStandardItem qsi4 = new QStandardItem();
+                qsi4.setCheckable(true);
+                if (MetodosListaProductos.getProducto(i).urgente) {
+                    qsi4.setCheckState(Qt.CheckState.Checked);
+                } else {
+                    qsi4.setCheckState(Qt.CheckState.Unchecked);
+                }
+                modelo.setItem(i, 4, qsi4);
             }
         }
     }
@@ -215,7 +233,17 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
         rellenarTabla();
     }
 
-    void borrarProducto() {
+    void borrarProductosSeleccionados() {
+        modelo = (QStandardItemModel) tableView_tabla.model();
+        if (!listaProductos.isEmpty()) {
+            for (int i = 0; i < listaProductos.size(); i++) {
 
+                if (modelo.takeItem(i, 0).checkState().equals(CheckState.Checked)) {
+                    MetodosListaProductos.borrarProducto(i);
+                }
+            }
+        }
+        rellenarTabla();
     }
+
 }
