@@ -197,4 +197,24 @@ public class FormularioAnadirProducto implements com.trolltech.qt.QUiForm<QDialo
         pushButton_cestaCompra.setText("");
     } // retranslateUi
 
+    public Producto crearProducto() {
+        int cantidad = spinBox_cantidad.value();
+        String nombre = lineEdit_nombre.text();
+        String seccion = comboBox_seccion.itemText(comboBox_seccion.currentIndex());
+        Boolean urgente;
+        //Boolean correcto = false;
+        if (checkBox_urgente.isChecked()) {
+            urgente = true;
+        } else {
+            urgente = false;
+        }
+        /*do{
+            if (!nombre.isEmpty()){
+                if (!seccion.isEmpty())
+                    correcto = true;
+        }while (!correcto);*/
+        Producto producto = new Producto(cantidad, nombre, seccion, urgente);
+        return producto;
+    }
+
 }
