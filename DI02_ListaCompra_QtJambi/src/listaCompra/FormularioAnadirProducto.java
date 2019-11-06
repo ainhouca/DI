@@ -157,7 +157,7 @@ public class FormularioAnadirProducto implements com.trolltech.qt.QUiForm<QDialo
         gridLayout_2.addItem(verticalSpacer_2, 1, 2, 1, 1);
 
         formLayout.addItem(gridLayout_2);
-        //formLayout.addLayout(gridLayout_2);
+        //formLayout.addLayout(gridLayout_2);   --> no existe el método addLayout() que crea el juic
 
         label_seccion.setBuddy(comboBox_seccion);
         label_cantidad.setBuddy(spinBox_cantidad);
@@ -167,16 +167,20 @@ public class FormularioAnadirProducto implements com.trolltech.qt.QUiForm<QDialo
         QWidget.setTabOrder(comboBox_seccion, checkBox_urgente);
         QWidget.setTabOrder(checkBox_urgente, pushButton_cestaCompra);
         retranslateUi(Dialog);
-        pushButton_cestaCompra.clicked.connect(spinBox_cantidad, "lower()");
-        pushButton_cestaCompra.clicked.connect(comboBox_seccion, "clear()");
-        pushButton_cestaCompra.clicked.connect(lineEdit_nombre, "clear()");
-        pushButton_cestaCompra.clicked.connect(checkBox_urgente, "setDisabled(boolean)");
 
+        pushButton_cestaCompra.clicked.connect(this, "crearProducto()");
+        pushButton_cestaCompra.clicked.connect(ClaseMain.principal, "rellenarTabla()");
+
+        //pushButton_cestaCompra.clicked.connect(spinBox_cantidad, "lower()");
+        //pushButton_cestaCompra.clicked.connect(comboBox_seccion, "clear()");
+        //pushButton_cestaCompra.clicked.connect(lineEdit_nombre, "clear()");
+        //pushButton_cestaCompra.clicked.connect(checkBox_urgente, "setDisabled(boolean)");
+        //pushButton_cestaCompra.clicked.connect(this, "retranslateUi (QDialog Dialog");
         Dialog.connectSlotsByName();
     } // setupUi
 
     void retranslateUi(QDialog Dialog) {
-        Dialog.setWindowTitle(com.trolltech.qt.core.QCoreApplication.translate("Dialog", "Dialog", null));
+        Dialog.setWindowTitle(com.trolltech.qt.core.QCoreApplication.translate("Dialog", "A\u00f1adir Producto", null));
         lineEdit_nombre.setToolTip(com.trolltech.qt.core.QCoreApplication.translate("Dialog", "Nombre del producto", null));
         label_seccion.setText(com.trolltech.qt.core.QCoreApplication.translate("Dialog", "Secci\u00f3n:", null));
         checkBox_urgente.setToolTip(com.trolltech.qt.core.QCoreApplication.translate("Dialog", "\u00bfEs urgente?", null));
@@ -198,7 +202,7 @@ public class FormularioAnadirProducto implements com.trolltech.qt.QUiForm<QDialo
         pushButton_cestaCompra.setText("");
     } // retranslateUi
 
-    public Producto crearProducto() {
+    void crearProducto() {
         int cantidad = spinBox_cantidad.value();
         String nombre = lineEdit_nombre.text();
         String seccion = comboBox_seccion.itemText(comboBox_seccion.currentIndex());
@@ -215,7 +219,7 @@ public class FormularioAnadirProducto implements com.trolltech.qt.QUiForm<QDialo
                     correcto = true;
         }while (!correcto);*/
         Producto producto = new Producto(cantidad, nombre, seccion, urgente);
-        return producto;
+        MetodosListaProductos.anadirProducto(producto);
     }
 
 }

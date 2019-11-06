@@ -11,7 +11,6 @@ import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
 import java.util.ArrayList;
 import java.util.List;
-import com.trolltech.qt.gui.QFormLayout;
 
 /**
  *
@@ -36,6 +35,8 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
     public QStatusBar statusbar;
 
     QStandardItemModel modelo;
+
+    List<Producto> listaProductos;
 
     public FormularioPrincipal() {
         super();
@@ -71,6 +72,8 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
         font1.setBold(true);
         font1.setWeight(75);
         pushButton_borrarTodo.setFont(font1);
+        pushButton_borrarTodo.clicked.connect(this, "borrarTodo()");
+        pushButton_borrarTodo.clicked.connect(this, "rellenarTabla()");
 
         gridLayout.addWidget(pushButton_borrarTodo, 6, 0, 1, 1);
 
@@ -82,7 +85,7 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
         font2.setBold(true);
         font2.setWeight(75);
         pushButton_borrarSeleccion.setFont(font2);
-
+        //pushButton_borrarSeleccion.clicked.connect(this, "MetodosListaProductos.borrarProducto(fila)");
         gridLayout.addWidget(pushButton_borrarSeleccion, 6, 1, 1, 2);
 
         label = new QLabel(centralwidget);
@@ -144,12 +147,13 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
         statusbar.setObjectName("statusbar");
         MainWindow.setStatusBar(statusbar);
         retranslateUi(MainWindow);
+        crearTabla();
 
         MainWindow.connectSlotsByName();
     } // setupUi
 
     void retranslateUi(QMainWindow MainWindow) {
-        MainWindow.setWindowTitle(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "MainWindow", null));
+        MainWindow.setWindowTitle(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Lista de la Compra", null));
         MainWindow.setToolTip(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Mi lista de la compra", null));
         pushButton_borrarTodo.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Borrar Todo", null));
         pushButton_borrarSeleccion.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Borrar Selecci\u00f3n", null));
@@ -168,9 +172,11 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
     }
 
     //método para rellenar la tabla
-    private void rellenarTabla() {
+    public void crearTabla() {
+
         //Creamos el modelo para la tabla
         modelo = new QStandardItemModel();
+
         //Añadimos los textos para los títulos de las columnas a una lista
         List<String> cabecera = new ArrayList<>();
         cabecera.add("X");
@@ -178,21 +184,38 @@ public class FormularioPrincipal implements com.trolltech.qt.QUiForm<QMainWindow
         cabecera.add("Cantidad");
         cabecera.add("Sección");
         cabecera.add("Urgente");
+
         //Indicamos el número de columnas
         modelo.setColumnCount(cabecera.size());
         modelo.setHorizontalHeaderLabels(cabecera);
 
-        //refrescarTabla();
-        //Añadimos los datos de la tabla al modelo
-        /*modelo.setRowCount(2);
-        modelo.setData(0, 0, "Pablo");
-        modelo.setData(0, 1, "González");
-        modelo.setData(1, 0, "Alfredo");
-        modelo.setData(1, 1, "Pérez");
-         */
+        rellenarTabla();
+
         //Indicamos a la tabla cual es su modelo
         tableView_tabla.setModel(modelo);
-
     }
 
+    //método para rellenar la tabla
+    void rellenarTabla() {
+        listaProductos = MetodosListaProductos.getListaProductos();
+        modelo.setRowCount(listaProductos.size());
+        if (!listaProductos.isEmpty()) {
+            for (int i = 0; i < listaProductos.size(); i++) {
+                modelo.setData(i, 0, "false");
+                modelo.setData(i, 1, MetodosListaProductos.getProducto(i).cantidad);
+                modelo.setData(i, 2, MetodosListaProductos.getProducto(i).nombre);
+                modelo.setData(i, 3, MetodosListaProductos.getProducto(i).seccion);
+                modelo.setData(i, 4, MetodosListaProductos.getProducto(i).urgente);
+            }
+        }
+    }
+
+    void borrarTodo() {
+        listaProductos = MetodosListaProductos.borrarListaProductos();
+        rellenarTabla();
+    }
+
+    void borrarProducto() {
+
+    }
 }

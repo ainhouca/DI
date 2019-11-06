@@ -3,19 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package listaCompra;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ *
  * @author Sammy Guergachi <sguergachi at gmail.com>
  */
-public class Metodos {
+public class MetodosListaProductos {
 
-        private static List<Producto> listaProductos = new ArrayList<>();
+    private static List<Producto> listaProductos = new ArrayList<>();
 
     public static void anadirProducto(Producto producto) {
         listaProductos.add(producto);
@@ -31,7 +30,7 @@ public class Metodos {
     }
 
     public static void setListaProductos(List<Producto> listaProductos) {
-        Metodos.listaProductos = listaProductos;
+        MetodosListaProductos.listaProductos = listaProductos;
     }
 
     public static void borrarProducto(int fila) {
@@ -55,7 +54,7 @@ public class Metodos {
     }
 
     public static Producto getProducto(int fila) {
-        return Metodos.listaProductos.get(fila);
+        return MetodosListaProductos.listaProductos.get(fila);
 
     }
 }
